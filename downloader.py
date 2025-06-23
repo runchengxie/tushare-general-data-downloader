@@ -20,8 +20,9 @@ def get_tushare_token():
         raise ValueError(error_message)
     return token
 
-def download_and_process_data(pro, stock_code, start_date, end_date):
-    """下载、处理并保存单只股票的数据。"""
+# 增加 output_dir 参数
+def download_and_process_data(pro, stock_code, start_date, end_date, output_dir):
+    """下载、处理并保存单只股票的数据到指定目录。"""
     print(f"\n正在拉取股票代码: {stock_code} 的数据...")
     df = pro.daily(
         ts_code=stock_code,
@@ -39,10 +40,18 @@ def download_and_process_data(pro, stock_code, start_date, end_date):
     df.rename(columns={"trade_date": "datetime", "vol": "volume"}, inplace=True)
     df["datetime"] = pd.to_datetime(df["datetime"], format="%Y%m%d")
 
-    # 保存文件
+    # 检查输出目录是否存在，如果不存在则创建
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"已创建输出目录: {output_dir}")
+
+    # 构造完整的文件路径
     file_name = f"{stock_code}_daily.csv"
-    df.to_csv(file_name, index=False)
-    print(f"数据处理完成，已成功保存为: {file_name}")
+    file_path = os.path.join(output_dir, file_name)
+
+    # 保存文件到新路径
+    df.to_csv(file_path, index=False)
+    print(f"数据处理完成，已成功保存为: {file_path}")
 
 def main():
     """
@@ -53,6 +62,7 @@ def main():
     stock_list = ["600036.SH", "000001.SZ"]
     start_date = "20240101"
     end_date = "20250531"
+    output_dir = "data"
     # --- 设置区结束 ---
 
     try:
@@ -69,7 +79,7 @@ def main():
     # 2. 循环处理所有股票
     for code in stock_list:
         try:
-            download_and_process_data(pro, code, start_date, end_date)
+            download_and_process_data(pro, code, start_date, end_date, output_dir)
             time.sleep(0.3)  # 礼貌性暂停，防止请求过快
         except Exception as e:
             # 单只股票出错不影响其他股票

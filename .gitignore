@@ -1,1 +1,32 @@
+# 字节码和缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境文件夹
+venv/
+env/
+.venv/
+.env/
+
+# 敏感信息文件
 .env
+*.env
+
+# IDE 和编辑器配置文件
+.vscode/
+.idea/
+*.swp
+
+# 构建和分发产物
+build/
+dist/
+*.egg-info/
+
+# 测试和覆盖率报告
+.pytest_cache/
+.coverage
+htmlcov/
+
+
+data/

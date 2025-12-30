@@ -1,0 +1,38 @@
+[project]
+name = "tushare-general-data-downloader"
+version = "0.1.0"
+description = "Fetch listed company datasets from TuShare with windowed backfills."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.1.0",
+    "tushare>=1.4.0",
+    "tzdata>=2023.3",
+]
+
+[project.optional-dependencies]
+parquet = ["pyarrow>=15.0"]
+
+[project.scripts]
+tushare-listed-fetch = "tushare_general_data_downloader.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.setuptools]
+packages = ["tushare_general_data_downloader"]
+package-dir = {"" = "src"}
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"

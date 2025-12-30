@@ -1,2 +1,1 @@
-# tushare_data_download
-
+# A股股票信息概览

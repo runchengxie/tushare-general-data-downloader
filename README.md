@@ -1,3 +1,25 @@
+# ⚠️ 仓库已迁移
+
+本仓库的功能已合并到 **[daily-messenger](https://github.com/nousresearch/daily-messenger)**。
+
+## 迁移对照
+
+| 旧入口 | 新入口 |
+|--------|--------|
+| `uv run tushare-listed-fetch` | `uv run marketops tushare listed-company fetch` |
+| `uv run tushare-listed-fetch --consolidate` | `uv run marketops tushare listed-company fetch --consolidate` |
+| `src/tushare_general_data_downloader/cli.py` | `src/tushare_jobs/cli.py` |
+| `src/tushare_general_data_downloader/fetchers.py` | `src/tushare_jobs/listed_company.py` |
+| `src/tushare_general_data_downloader/api.py` | `src/tushare_jobs/retry.py` |
+| `src/tushare_general_data_downloader/storage.py` | `src/tushare_jobs/storage.py` |
+| `src/tushare_general_data_downloader/windowing.py` | `src/tushare_jobs/windowing.py` |
+
+所有测试已同步迁入 `tests/tushare_jobs/`。
+
+---
+
+以下是原仓库 README（仅供参考）：
+
 # Tushare 上市公司接口批量抓取
 
 一次性批量抓取 A 股上市公司基础信息与事件表，并支持按时间窗切片 + 自动拆分，适合补历史与长期增量。
